@@ -1,0 +1,280 @@
+/* The Price of a Free Man — reading-room styles
+   Palette taken from the documents: aged paper, iron-gall ink, deep red ink.
+   Contrast on --paper: ink 13.2:1, ink-2 6.4:1, price-red 7.9:1 (7.4:1 on the darkest grain). */
+
+:root{
+  --paper:#F3EEE3;
+  --paper-2:#EAE3D5;
+  --ink:#2B2420;
+  --ink-2:#5E544B;
+  --price-red:#8B1E1E;   /* money and the record only */
+  --rule:#D6CCBB;
+  --dark:#1C1714;          /* header and hero base: iron-gall black-brown */
+  --on-dark:#F6F1E7;       /* 15.8:1 on --dark */
+  --on-dark-2:#C9C0B2;     /* 9.9:1 on --dark */
+  --price-red-light:#F29A8A; /* red ink on dark, 8.3:1 */
+  --serif:"Libre Caslon Text", "Iowan Old Style", Georgia, serif;
+  --sans:"Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --gap:2rem;
+
+  /* Paper grain: an SVG noise tile (rendered once, then repeated) plus faint laid lines. */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .25 0 0 0 0 .17 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  --laid:repeating-linear-gradient(0deg, rgba(70,52,34,.022) 0 1px, transparent 1px 6px);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:var(--grain), var(--laid);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:1.1875rem;          /* 19px */
+  line-height:1.65;
+}
+img{max-width:100%;display:block}
+
+/* Links are ink with a quiet underline, so red only ever means money and the record. */
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink-2);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover,a:focus-visible{text-decoration-thickness:2px;text-decoration-color:var(--ink)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+h1:focus,h2:focus{outline:none}
+
+/* Red ink highlight: bold red with a solid underline */
+.mark{color:var(--price-red);font-weight:700;text-decoration:underline;text-decoration-color:currentColor;text-decoration-thickness:2px;text-underline-offset:.2em}
+.hero .mark{color:var(--price-red-light)}
+
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.15;margin:0;color:var(--ink)}
+h1{font-size:clamp(2.5rem,5vw,3.375rem)}
+h2{font-size:clamp(2rem,3.6vw,2.5rem)}
+h3{font-size:1.375rem;margin-bottom:.6rem}
+p{margin:0 0 1em}
+p, li, dd, figcaption, blockquote{max-width:66ch}
+i, em{font-style:italic}
+
+/* ---------- frame ---------- */
+.site-header{background:var(--dark);border-bottom:1px solid #000;position:sticky;top:0;z-index:200}
+.site-header .inner,
+.page,
+.site-footer{max-width:76rem;margin:0 auto;padding-left:2.5rem;padding-right:2.5rem}
+.site-header .inner{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem 2.5rem;padding-top:1.25rem;padding-bottom:1.1rem}
+.site-title{font-family:var(--serif);font-size:1.25rem;color:var(--on-dark);text-decoration:none}
+.site-title:hover{text-decoration:underline}
+nav.links{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;font-family:var(--sans);font-size:.9375rem}
+nav.links a{color:var(--on-dark-2);text-decoration:none}
+nav.links a:hover{color:var(--on-dark);text-decoration:underline}
+.site-header :focus-visible{outline-color:var(--on-dark)}
+nav.links a.on{color:var(--on-dark);text-decoration:underline;text-decoration-color:var(--on-dark);text-decoration-thickness:2px}
+
+.view{display:none;position:relative}
+.view.on{display:block}
+
+/* ---------- 12-column grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
+.page-head{grid-column:1 / span 8;padding:5rem 0 3.25rem}
+.page-head h1,.page-head h2{margin:.35rem 0 1.25rem}
+.label{font-family:var(--sans);font-size:.9375rem;color:var(--ink-2);margin:0}
+.lede{font-size:1.3125rem;line-height:1.55;color:var(--ink)}
+
+.figs{grid-column:1 / span 5}
+.text{grid-column:7 / span 6}
+.text-left{grid-column:1 / span 7}
+.aside-right{grid-column:9 / span 4;padding-top:.4rem}
+
+/* ---------- figures & captions (scans sit on solid paper, never under grain) ---------- */
+figure{margin:0 0 3.5rem}
+figure img{width:100%;height:auto;border:1px solid var(--rule);background:var(--paper)}
+figcaption{font-family:var(--sans);font-size:.875rem;line-height:1.5;color:var(--ink-2);margin-top:.75rem}
+figcaption .what{color:var(--ink)}
+figure.inline{margin:1.75rem 0 2rem}
+
+.placeholder{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  background:var(--paper-2);border:1px dashed #9A8E7E;
+  font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-2);padding:1.5rem
+}
+
+/* ---------- metadata label ---------- */
+dl.meta{font-family:var(--sans);font-size:.9375rem;line-height:1.5;margin:0 0 3rem;padding-top:1rem;border-top:1px solid var(--rule)}
+dl.meta div{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;padding:.3rem 0}
+dl.meta dt{color:var(--ink-2)}
+dl.meta dd{margin:0}
+
+/* ---------- text sections ---------- */
+.sec{margin:0 0 3.25rem}
+.sec .label{margin-bottom:.35rem}
+blockquote{margin:1.5rem 0 1.75rem 2rem;padding:0}
+blockquote p{margin:0}
+blockquote cite{display:block;margin-top:.4rem;font-family:var(--sans);font-style:normal;font-size:.875rem;color:var(--ink-2)}
+.question{margin:4rem 0 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.question h3{font-size:1.1875rem;margin-bottom:.5rem}
+
+/* ---------- home: full-screen portrait hero ---------- */
+/* Dark base fills the screen; the portrait sits right so the face stays clear of the text,
+   and fades into the dark on its left edge. The bottom of the hero fades into paper.
+   Script fades the portrait as you scroll. */
+.hero{position:relative;min-height:calc(100vh - 72px);min-height:calc(100svh - 72px);background:var(--dark);color:var(--on-dark);overflow:hidden;display:flex;flex-direction:column}
+.hero-media{position:absolute;top:0;right:0;bottom:0;width:64%;will-change:opacity,transform}
+.hero-media img{
+  display:none;width:100%;height:100%;object-fit:cover;
+  object-position:var(--portrait-pos, 50% 14%);   /* adjust to keep the face clear */
+  filter:grayscale(1) sepia(.28) contrast(1.05) brightness(.92);
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 32%);
+          mask-image:linear-gradient(to right, transparent 0, #000 32%);
+}
+.hero-media.has-img img{display:block}
+.hero-media.has-img .portrait-placeholder{display:none}
+.portrait-placeholder{position:absolute;inset:2rem 2.5rem 6rem 30%;background:transparent;border-color:#6B6157;color:var(--on-dark-2)}
+/* text-side shade: keeps the intro at 9:1 or better even where the photo shows through */
+.hero-shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right, rgba(28,23,20,.96) 0%, rgba(28,23,20,.9) 38%, rgba(28,23,20,.35) 58%, rgba(28,23,20,0) 72%)}
+.hero-fade{position:absolute;left:0;right:0;bottom:0;height:14vh;pointer-events:none;
+  background:linear-gradient(to bottom, rgba(243,238,227,0), var(--paper))}
+.hero > .page{position:relative;z-index:2;flex:1;width:100%;align-content:center;padding-bottom:14vh}
+.hero .home-intro{padding:3rem 0}
+.hero .label{color:var(--on-dark-2)}
+.hero h1{color:var(--on-dark)}
+.hero .lede{color:#E9E2D5}
+.hero-credit{
+  position:absolute;right:1.25rem;bottom:calc(14vh + .75rem);z-index:3;margin:0;max-width:none;
+  font-family:var(--sans);font-size:.8125rem;line-height:1.4;color:var(--on-dark-2);
+  background:rgba(28,23,20,.8);padding:.2rem .5rem
+}
+
+.home-intro{grid-column:1 / span 6}
+.home-intro h1{margin:.35rem 0 1.5rem}
+.home-fig{grid-column:4 / span 9;margin:3rem 0 4.5rem}
+.home-thesis{grid-column:1 / span 7;font-size:1.3125rem;line-height:1.55;margin-bottom:4.5rem}
+.contents{grid-column:1 / span 8;margin-bottom:6rem}
+.contents h2{font-size:1.375rem;margin-bottom:1.25rem}
+ol.toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.toc li{display:grid;grid-template-columns:2.5rem 1fr;padding:1.25rem 0;border-bottom:1px solid var(--rule);max-width:none}
+ol.toc .num{font-family:var(--sans);color:var(--ink-2);padding-top:.2rem}
+ol.toc a{font-size:1.25rem}
+ol.toc .date{font-family:var(--sans);font-size:.9375rem;color:var(--ink-2);margin-left:.5rem}
+ol.toc p{margin:.3rem 0 0;color:var(--ink-2);font-size:1.0625rem}
+
+/* ---------- about: timeline ---------- */
+dl.timeline{margin:0;font-size:1rem;line-height:1.5}
+dl.timeline div{display:grid;grid-template-columns:3.5rem 1fr;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--rule)}
+dl.timeline dt{font-family:var(--sans);color:var(--ink-2)}
+dl.timeline dd{margin:0}
+
+/* ---------- heroic slave: parts ---------- */
+ol.parts{list-style:none;margin:0 0 3.5rem;padding:0}
+ol.parts li{display:grid;grid-template-columns:2.75rem 1fr;padding:.9rem 0;border-bottom:1px solid var(--rule);max-width:none}
+ol.parts li:first-child{border-top:1px solid var(--rule)}
+ol.parts .num{color:var(--ink-2)}
+ol.parts p{margin:0}
+ol.parts strong{font-weight:700}
+
+/* ---------- reflection & sources ---------- */
+.essay-meta{font-family:var(--sans);font-size:.8em;line-height:1.6;color:var(--ink-2);margin:0 0 2.5rem}
+.essay p{text-indent:2em}
+ul.src{list-style:none;margin:0;padding:0}
+ul.src li{padding:.9rem 0 .9rem 2em;text-indent:-2em;border-bottom:1px solid var(--rule);font-size:.9em;max-width:none}
+ul.src a{word-break:break-word}
+
+/* ---------- text size control (reflection, sources) ---------- */
+.resizable{font-size:calc(1em * var(--text-scale, 1))}
+.textsize{display:flex;align-items:center;gap:.35rem;margin:0 0 2rem;font-family:var(--sans);font-size:.9375rem;color:var(--ink-2)}
+.textsize-label{margin-right:.35rem}
+.textsize button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:3px;min-width:2.4rem;min-height:2.2rem;padding:0 .5rem;cursor:pointer}
+.textsize button:hover{border-color:var(--ink-2)}
+.textsize button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.textsize button:disabled{opacity:.4;cursor:default}
+
+/* ---------- hover cards on red words ---------- */
+.has-card{position:relative;cursor:help;border-radius:2px}
+.has-card::after{content:"\2020";content:"\2020" / "";display:inline-block;font-family:var(--sans);font-weight:600;font-size:.6em;vertical-align:super;margin-left:.08em;line-height:0}
+.card{
+  position:absolute;left:0;top:100%;margin-top:.5rem;z-index:150;
+  width:19rem;max-width:calc(100vw - 2rem);padding:.75rem .9rem .8rem;
+  background:#FBF8F2;color:var(--ink);border:1px solid var(--rule);border-top:3px solid var(--price-red);
+  box-shadow:0 10px 28px rgba(43,36,32,.18);
+  font-family:var(--sans);font-size:.875rem;line-height:1.5;font-weight:400;font-style:normal;
+  text-align:left;text-indent:0;white-space:normal;letter-spacing:0;
+  display:none;               /* out of the layout until shown, so it never widens the page */
+}
+@keyframes card-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.card::before{content:"";position:absolute;left:0;right:0;top:-.6rem;height:.6rem}  /* hover bridge */
+.card.above{top:auto;bottom:100%;margin-top:0;margin-bottom:.5rem}
+.card.above::before{top:auto;bottom:-.6rem}
+.card i{font-style:italic}
+.card img{display:block;width:100%;height:auto;margin-top:.6rem;border:1px solid var(--rule)}
+.card-src{display:block;margin-top:.45rem;font-size:.8125rem;color:var(--ink-2)}
+.has-card:hover .card,.has-card:focus .card,.has-card:focus-within .card{display:block;animation:card-in .15s ease}
+.has-card:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+
+/* ---------- next / previous ---------- */
+.pager{grid-column:1 / -1;display:flex;justify-content:space-between;gap:1rem;margin:3rem 0 0;padding:1.25rem 0 6rem;border-top:1px solid var(--rule);font-family:var(--sans);font-size:1rem}
+
+.site-footer{border-top:1px solid var(--rule);padding-top:1.5rem;padding-bottom:2.5rem;font-family:var(--sans);font-size:.875rem;color:var(--ink-2)}
+.site-footer p{margin:0}
+
+/* ---------- page-curl corner ---------- */
+/* A dog-ear: the bottom-right triangle shows the page beneath, the top-left triangle is the folded-over back of the page. */
+.curl{
+  position:absolute;right:0;bottom:0;z-index:3;
+  width:56px;height:56px;display:block;text-decoration:none;
+  background:
+    linear-gradient(to top left,
+      #E4DBCA 0%, #BFB29A calc(50% - 1px),      /* page underneath: shadowed where the flap lifts */
+      #D4C8B2 50%, #ECE4D5 66%, #FBF8F2 100%);  /* back of the page: crease at the fold, light at the tip */
+  filter:drop-shadow(-1px -1px 2px rgba(43,36,32,.18));
+  transition:width .2s ease, height .2s ease, filter .2s ease;
+}
+.curl:hover,.curl:focus-visible{width:76px;height:76px;filter:drop-shadow(-3px -3px 4px rgba(43,36,32,.22))}
+.curl:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ---------- page-turn layers (built by script) ---------- */
+.turn-stage{position:fixed;top:0;left:0;bottom:0;z-index:100;pointer-events:none;perspective-origin:50% 50%;overflow:hidden}
+.turn-under{position:absolute;inset:0;background:linear-gradient(to right, rgba(43,36,32,.24), rgba(43,36,32,.07) 40%, rgba(43,36,32,0) 75%)}
+.turn-page{
+  position:absolute;inset:0;overflow:hidden;
+  background-color:var(--paper);background-image:var(--grain), var(--laid);
+  transform-origin:0 50%;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  box-shadow:0 0 36px rgba(43,36,32,.18);
+}
+.turn-content{background-color:var(--paper);background-image:var(--grain), var(--laid)}
+.turn-shade{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(to left, rgba(43,36,32,.38), rgba(43,36,32,.06))}
+
+/* ---------- small screens: single column, images first ---------- */
+@media (max-width:768px){
+  body{font-size:1.125rem}
+  .site-header .inner,.page,.site-footer{padding-left:1.25rem;padding-right:1.25rem}
+  .site-header .inner{flex-wrap:nowrap;flex-direction:column;align-items:stretch;gap:.35rem;padding-top:.8rem;padding-bottom:.6rem}
+  nav.links{flex-wrap:nowrap;overflow-x:auto;gap:1.25rem;padding-bottom:.25rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav.links::-webkit-scrollbar{display:none}
+  nav.links a{white-space:nowrap}
+  .grid{display:block}
+  .page-head,.home-intro{padding:3rem 0 2rem}
+  .home-fig,.home-thesis{margin-bottom:3rem}
+  .home-fig{margin-top:0}
+  .figs{margin-bottom:1rem}
+  figure{margin-bottom:2.5rem}
+  .aside-right{padding-top:0;margin-top:1rem}
+  blockquote{margin-left:1.25rem}
+  dl.meta div{grid-template-columns:6.5rem 1fr}
+
+  /* hero: portrait fills the top of the screen with the face clear; text starts below the face on a dark shade */
+  .hero-media{width:100%;bottom:auto;height:66svh;height:66vh}
+  .hero-media img{object-position:var(--portrait-pos-mobile, 50% 6%);
+    -webkit-mask-image:linear-gradient(to bottom, #000 60%, transparent 100%);
+            mask-image:linear-gradient(to bottom, #000 60%, transparent 100%)}
+  .hero-shade{background:linear-gradient(to bottom, rgba(28,23,20,0) 0, rgba(28,23,20,0) 26vh, rgba(28,23,20,.92) 42vh, rgba(28,23,20,.96) 100%)}
+  .hero-fade{height:8vh}
+  .hero > .page{align-content:start;padding-top:44vh;padding-bottom:9vh}
+  .hero .home-intro{padding:0 0 1.5rem}
+  .hero-credit{top:.75rem;right:.75rem;bottom:auto;font-size:.75rem}
+  .portrait-placeholder{inset:3.5rem 1.25rem 40% 1.25rem}
+
+  .curl{width:40px;height:40px}
+  .curl:hover,.curl:focus-visible{width:52px;height:52px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .curl{transition:none}
+  .card{animation:none !important}
+}
